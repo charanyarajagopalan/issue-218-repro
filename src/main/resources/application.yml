@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: issue-218-repro
+
+app:
+  refinitiv:
+    service: ELEKTRON_DD
+    region: ap-southeast-1
+    machineId: XXX
+    appKey: XXX
+    password: XXX
+
+logging:
+  level:
+    com.refinitiv.eta: debug
+    com.charanya.app: trace
+
+
+server:
+  port: 8085
