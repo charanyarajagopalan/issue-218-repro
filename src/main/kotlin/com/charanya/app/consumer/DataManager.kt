@@ -25,7 +25,7 @@ import javax.annotation.PreDestroy
 import kotlin.concurrent.thread
 
 /**
- * Consumer Manager, used to setup market data consumer & subscription
+ * Consumer Manager, used to setup consumer & subscription
  */
 @Component
 class DataManager(
@@ -139,14 +139,13 @@ class DataManager(
         val endpoint = discoveryConsumer.discoverEndpoint(machineId, password, appKey)
 
         val consumerName = "$CONSUMER_PREFIX${Instant.now().epochSecond}"
-        val configMap = createConsumerConfigMap(consumerName, endpoint!!.url, endpoint!!.port)
         // The consumer configuration class allows the customization of the consumer (OmmConsumer) interface.
         val consumerConfig = EmaFactory.createOmmConsumerConfig()
             .consumerName(consumerName)
             .username(machineId)
             .password(password)
             .clientId(appKey)
-            .config(configMap)
+            .config(createConsumerConfigMap(consumerName, endpoint!!.url, endpoint!!.port))
 
         EmaFactory.createOmmConsumer(consumerConfig).run {
             logger.info("Created new consumer[$consumerName]")
